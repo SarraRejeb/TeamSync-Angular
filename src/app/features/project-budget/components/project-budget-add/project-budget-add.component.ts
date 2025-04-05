@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProjectBudgetService } from 'src/app/core/services/project-budget/project-budget.service';
 import { Router } from '@angular/router';
 import { Projet } from '../../models/projet.model';
-import { ProjetService } from 'src/app/core/services/project/project.service'; // Assurez-vous d'importer ce service.
+import { ProjetService } from 'src/app/core/services/project/project.service';
 
 @Component({
   selector: 'app-project-budget-add',
@@ -13,54 +13,85 @@ import { ProjetService } from 'src/app/core/services/project/project.service'; /
 export class ProjectBudgetsAddComponent implements OnInit {
   budgetForm!: FormGroup;
   projets: Projet[] = [];
+  projetsAvecBudget: string[] = [];
+  erreurProjet: string = '';
 
   constructor(
     private fb: FormBuilder,
     private budgetService: ProjectBudgetService,
-    private projetService: ProjetService, // Instancier correctement le service
+    private projetService: ProjetService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
+    this.loadProjets();
+    this.loadBudgets();
+  }
+
+  initForm(): void {
     this.budgetForm = this.fb.group({
       projetId: ['', Validators.required],
-      allocatedFunds: [0, [Validators.required, Validators.min(0)]],
+      allocatedFunds: [0, [Validators.required, Validators.min(1)]],
       usedFunds: [0, [Validators.required, Validators.min(0)]],
     });
-  
+  }
+
+  loadProjets(): void {
     this.projetService.getAllProjets().subscribe(
       (data: Projet[]) => {
-        console.log('Projets récupérés:', data);
         this.projets = data;
       },
       (error) => {
         console.error('Erreur lors de la récupération des projets', error);
-        alert('Impossible de récupérer les projets, vérifiez la connexion avec l\'API.');
+        alert("Erreur de chargement des projets.");
       }
     );
   }
-  
+
+  loadBudgets(): void {
+    this.budgetService.getAllProjectBudgets().subscribe(
+      (budgets) => {
+        this.projetsAvecBudget = budgets.map((b: any) => b.projet.id);
+      },
+      (error) => {
+        console.error('Erreur récupération des budgets', error);
+      }
+    );
+  }
 
   onSubmit(): void {
+    this.erreurProjet = '';
     if (this.budgetForm.valid) {
-      const selectedProjet = this.projets.find(p => p.id === this.budgetForm.value.projetId);
-  
-      if (!selectedProjet) {
-        console.error('Projet non trouvé !');
+      const projetId = this.budgetForm.value.projetId;
+
+      // ✅ Vérification : si ce projet a déjà un budget
+      if (this.projetsAvecBudget.includes(projetId)) {
+        this.erreurProjet = 'Ce projet a déjà un budget associé.';
         return;
       }
-  
+
+      const selectedProjet = this.projets.find(p => p.id === projetId);
+      if (!selectedProjet) {
+        this.erreurProjet = 'Projet introuvable.';
+        return;
+      }
+
       const payload = {
         projet: selectedProjet,
         allocatedFunds: this.budgetForm.value.allocatedFunds,
         usedFunds: this.budgetForm.value.usedFunds
       };
-  
-      // Créer le budget du projet
+
       this.budgetService.createProjectBudget(payload).subscribe(() => {
-        this.router.navigate(['/admin/project-budgets']);
+        alert('Budget ajouté avec succès !');
+        
+        // ✅ Recharge la page entière (hard reload)
+        window.location.reload();
+
       }, error => {
-        console.error('Erreur lors de la création du budget du projet', error);
+        console.error('Erreur lors de la création du budget', error);
+        alert('Erreur lors de la création du budget.');
       });
     }
   }

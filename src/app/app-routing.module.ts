@@ -13,6 +13,7 @@ import { ProjectBudgetsListComponent } from './features/project-budget/component
 import { ProjectBudgetEditComponent } from './features/project-budget/components/project-budget-edit/project-budget-edit.component';
 
 
+
 const routes: Routes = [
   { path: 'admin',  component: AdminLayoutComponent },
   { path: 'admin/job-postings/add', component: JobPostingsAddComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'admin/project-budget/add', component: ProjectBudgetsAddComponent },
   { path: 'admin/project-budget', component: ProjectBudgetsListComponent },
   { path: 'admin/project-budgets/edit/:id', component: ProjectBudgetEditComponent },
+
   { path: 'user',component: UserLayoutComponent},
   { path: '', redirectTo: '/user', pathMatch: 'full' }
 ];

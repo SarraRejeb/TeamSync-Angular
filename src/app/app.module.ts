@@ -19,11 +19,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { share } from 'rxjs';
 import { PayrollModule } from './features/payroll/payroll.module';
 import { ProjectBudgetngModule } from './features/project-budget/project-budget.module';
+
 @NgModule({
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     UserLayoutComponent,
+
 
    
   ],
