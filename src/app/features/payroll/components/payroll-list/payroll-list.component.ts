@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Payroll } from '../../models/payroll.model';
 import { PayrollService } from 'src/app/core/services/payroll/payroll.service';
-import { Router } from '@angular/router';  // Importation de Router
+import { EmployeeService } from 'src/app/core/services/employee/employee.service';  // Importer le service Employee
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payroll-list',
@@ -12,8 +13,11 @@ export class PayrollListComponent implements OnInit {
   payrolls: Payroll[] = [];
   employeeNames: Map<string, string> = new Map();
 
-  // Ajout de Router dans le constructeur pour l'injection de dépendance
-  constructor(private payrollService: PayrollService, private router: Router) {}
+  constructor(
+    private payrollService: PayrollService,
+    private employeeService: EmployeeService,  // Injection du service
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadPayrolls();
@@ -23,15 +27,19 @@ export class PayrollListComponent implements OnInit {
     this.payrollService.getAllPayrolls().subscribe(
       (data) => {
         this.payrolls = data;
+        console.log('Fiches de paie chargées :', this.payrolls);
+        
         this.payrolls.forEach(payroll => {
-          this.payrollService.getEmployeeName(payroll.employeeId).subscribe(
-            (name) => {
-              this.employeeNames.set(payroll.employeeId, name);
-            },
-            (error) => {
-              console.error('Erreur lors de la récupération du nom de l\'employé', error);
-            }
-          );
+          if (payroll.employeeId) {
+            this.employeeService.getEmployeeById(payroll.employeeId).subscribe(
+              (employee) => {
+                this.employeeNames.set(payroll.employeeId, employee.name);  // Enregistrer le nom dans le Map
+              },
+              (error) => {
+                console.error('Erreur lors de la récupération du nom de l\'employé', error);
+              }
+            );
+          }
         });
       },
       (error) => {
@@ -39,12 +47,15 @@ export class PayrollListComponent implements OnInit {
       }
     );
   }
-  
+
+  getEmployeeName(employeeId: string): string {
+    return this.employeeNames.get(employeeId) ?? 'Nom non disponible';
+  }
+
   onEdit(payroll: Payroll): void {
-    // Utilisation de l'instance de router injectée pour la redirection
     this.router.navigate([`/admin/payrolls/edit`, payroll.id]);
   }
-  
+
   onDelete(payrollId: string): void {
     this.payrollService.deletePayroll(payrollId).subscribe(
       () => {

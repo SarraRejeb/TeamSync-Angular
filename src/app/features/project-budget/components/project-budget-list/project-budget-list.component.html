@@ -41,7 +41,13 @@
                 <td>{{ projectBudget.usedFunds | currency:'EUR' }}</td>
                 <td>
                 <!-- Bouton de suppression -->
-                <button class="btn btn-danger" (click)="onDelete(projectBudget.id ? projectBudget.id : '')" *ngIf="projectBudget.id">Supprimer</button>
+                <button class="btn btn-danger" 
+                (click)="onDelete(projectBudget.id ? projectBudget.id : '')" *ngIf="projectBudget.id">Supprimer</button>
+                <!-- Bouton de Edit -->
+                <button class="btn btn-warning" 
+                (click)="onEdit(projectBudget)" *ngIf="projectBudget.id">Modifier</button>
+        
+
                 </td>
               </tr>
               

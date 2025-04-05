@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { PayrollService } from 'src/app/core/services/payroll/payroll.service';
+import { EmployeeService } from 'src/app/core/services/employee/employee.service';
 import { Payroll } from '../../models/payroll.model';
-
+import { Employee } from 'src/app/features/employee/models/employee.model';
 
 @Component({
   selector: 'app-payroll-add',
   templateUrl: './payroll-add.component.html',
   styleUrls: ['./payroll-add.component.css']
 })
-export class PayrollsAddComponent {
+export class PayrollsAddComponent implements OnInit {
   payroll = {
     employeeId: '',
     employeeName: '', // Ajout de employeeName si nécessaire
@@ -18,9 +19,32 @@ export class PayrollsAddComponent {
     payDate: '' // Utiliser payDate pour la date de paiement
   };
 
+  employees: Employee[] = [];  // Liste des employés
   message: string = '';
 
-  constructor(private payrollService: PayrollService, private router: Router) { }
+  constructor(
+    private payrollService: PayrollService,
+    private employeeService: EmployeeService,  // Injecter EmployeeService
+    private router: Router,
+    private cdRef: ChangeDetectorRef  // Utilisé pour détecter les changements
+  ) {}
+
+  ngOnInit(): void {
+    this.loadEmployees();  // Charger la liste des employés
+  }
+
+  loadEmployees(): void {
+    this.employeeService.getAllEmployees().subscribe(
+      (employees) => {
+        this.employees = employees;
+        console.log('Employés:', this.employees);  // Vérifie les employés dans la console
+        this.cdRef.detectChanges();  // Détecter les changements dans la vue
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des employés', error);
+      }
+    );
+  }
 
   onSubmit(): void {
     // Crée un objet payroll à partir des valeurs du formulaire
@@ -44,5 +68,4 @@ export class PayrollsAddComponent {
       }
     );
   }
-
 }

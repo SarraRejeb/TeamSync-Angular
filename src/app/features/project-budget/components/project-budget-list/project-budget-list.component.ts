@@ -39,9 +39,11 @@ export class ProjectBudgetsListComponent implements OnInit {
   }
 
   onEdit(budget: ProjectBudget): void {
+    console.log('Navigating to edit with ID:', budget.id); // Ajoutez cette ligne
     this.router.navigate(['/admin/project-budgets/edit', budget.id]);
   }
-
+  
+  
   onDelete(budgetId: string): void {
     // Vérification que l'ID est défini
     if (!budgetId) {

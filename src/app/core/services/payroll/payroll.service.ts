@@ -8,7 +8,7 @@ import { Payroll } from 'src/app/features/payroll/models/payroll.model';
 })
 export class PayrollService {
   private apiUrl = 'http://localhost:8082/api/payrolls'; // URL Backend Spring Boot
-  private employeeApiUrl = 'http://localhost:8082/api/employees'; // URL pour récupérer les employés
+  
 
   constructor(private http: HttpClient) {}
 
@@ -16,12 +16,6 @@ export class PayrollService {
   getAllPayrolls(): Observable<Payroll[]> {
     return this.http.get<Payroll[]>(this.apiUrl);
   }
-
-  // Récupérer le nom de l'employé par ID
-  getEmployeeName(employeeId: string): Observable<string> {
-   return this.http.get<string>(`${this.employeeApiUrl}/${employeeId}/name`);
- }
- 
 
   // Récupérer un payroll par ID
   getPayrollById(id: string): Observable<Payroll> {

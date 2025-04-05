@@ -1,7 +1,6 @@
 <app-admin-header></app-admin-header>
 <app-admin-sidebar></app-admin-sidebar>
 
-<!-- Main Wrapper -->
 <main class="main-wrapper">
   <div class="container-fluid">
     <div class="inner-contents">
@@ -11,14 +10,13 @@
           <p class="text-gray mb-0">Voici la liste des fiches de paie enregistrées.</p>
         </div>
         <div class="right-part">
-          <form class="search-form w-auto" action="https://wpthemebooster.com/demo/themeforest/html/kleon/search.php">
-            <input type="text" name="search" class="bg-white form-control" placeholder="Search">
+          <form class="search-form w-auto">
+            <input type="text" name="search" class="bg-white form-control" placeholder="Rechercher">
             <button type="submit" class="btn"><img src="assets/img/svg/search.svg" alt=""></button>
           </form>
         </div>
       </div>
 
-      <!-- Table des fiches de paie -->
       <div class="card border-0 p-5">
         <div class="card-header bg-transparent border-0 p-0 d-flex align-items-center justify-content-between gap-3">
           <h6 class="mb-0">Détails des Fiches de Paie</h6>
@@ -29,7 +27,6 @@
             <thead>
               <tr>
                 <th>Employé</th>
-                <!--th>Nom de l'Employé</th-->
                 <th>Salaire</th>
                 <th>Bonus</th>
                 <th>Date de Paiement</th>
@@ -38,15 +35,17 @@
             </thead>
             <tbody>
               <tr *ngFor="let payroll of payrolls">
-                <td><i class="fas fa-user"></i> {{ payroll.employeeId }}</td>
-                <!--td>{{ employeeNames.get(payroll.employeeId) || 'Nom non disponible' }}</td-->
-                <td>{{ payroll.salary | currency:'EUR' }}</td> <!-- Ajout de format de devise -->
-                <td>{{ payroll.bonus | currency:'EUR' }}</td> <!-- Ajout de format de devise -->
-                <td>{{ payroll.payDate | date:'dd/MM/yyyy' }}</td> <!-- Format de la date -->
+                <td>{{ getEmployeeName(payroll.employeeId) }}</td> <!-- Affiche le nom de l'employé -->
+                <td>{{ payroll.salary | currency:'EUR' }}</td>
+                <td>{{ payroll.bonus | currency:'EUR' }}</td>
+                <td>{{ payroll.payDate | date:'dd/MM/yyyy' }}</td>
                 <td>
                   <button *ngIf="payroll.id" (click)="onDelete(payroll.id)" class="btn btn-danger">Supprimer</button>
                   <button *ngIf="payroll.id" (click)="onEdit(payroll)" class="btn btn-warning">Modifier</button>
                 </td>
+              </tr>
+              <tr *ngIf="payrolls.length === 0">
+                <td colspan="5" class="text-center text-muted">Aucune fiche de paie trouvée.</td>
               </tr>
             </tbody>
           </table>

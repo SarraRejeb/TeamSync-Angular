@@ -10,6 +10,7 @@ import { PayrollListComponent } from './features/payroll/components/payroll-list
 import { PayrollEditComponent } from './features/payroll/components/payroll-edit/payroll-edit.component';
 import { ProjectBudgetsAddComponent } from './features/project-budget/components/project-budget-add/project-budget-add.component';
 import { ProjectBudgetsListComponent } from './features/project-budget/components/project-budget-list/project-budget-list.component';
+import { ProjectBudgetEditComponent } from './features/project-budget/components/project-budget-edit/project-budget-edit.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'admin/payrolls/edit/:id', component: PayrollEditComponent },
   { path: 'admin/project-budget/add', component: ProjectBudgetsAddComponent },
   { path: 'admin/project-budget', component: ProjectBudgetsListComponent },
+  { path: 'admin/project-budgets/edit/:id', component: ProjectBudgetEditComponent },
   { path: 'user',component: UserLayoutComponent},
   { path: '', redirectTo: '/user', pathMatch: 'full' }
 ];

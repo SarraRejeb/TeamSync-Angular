@@ -17,27 +17,14 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { share } from 'rxjs';
-import { PayrollListComponent } from './features/payroll/components/payroll-list/payroll-list.component';
-import { PayrollsAddComponent } from './features/payroll/components/payroll-add/payroll-add.component';
-import { PayrollEditComponent } from './features/payroll/components/payroll-edit/payroll-edit.component';
-import { PayrollDeleteComponent } from './features/payroll/components/payroll-delete/payroll-delete.component';
-import { ProjectBudgetsListComponent } from './features/project-budget/components/project-budget-list/project-budget-list.component';
-import { ProjectBudgetsAddComponent } from './features/project-budget/components/project-budget-add/project-budget-add.component';
-import { ProjectBudgetEditComponent } from './features/project-budget/components/project-budget-edit/project-budget-edit.component';
-import { ProjectBudgetDeleteComponent } from './features/project-budget/components/project-budget-delete/project-budget-delete.component';
+import { PayrollModule } from './features/payroll/payroll.module';
+import { ProjectBudgetngModule } from './features/project-budget/project-budget.module';
 @NgModule({
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     UserLayoutComponent,
-    PayrollListComponent,
-    PayrollsAddComponent,
-    PayrollEditComponent,
-    PayrollDeleteComponent,
-    ProjectBudgetsListComponent,
-    ProjectBudgetsAddComponent,
-    ProjectBudgetEditComponent,
-    ProjectBudgetDeleteComponent,
+
    
   ],
   imports: [
@@ -49,6 +36,8 @@ import { ProjectBudgetDeleteComponent } from './features/project-budget/componen
     HttpClientModule,
     RouterModule,
     JobPostingModule,
+    PayrollModule,
+    ProjectBudgetngModule
    
   ],
  
