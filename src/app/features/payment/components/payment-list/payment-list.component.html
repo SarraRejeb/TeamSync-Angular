@@ -1,0 +1,60 @@
+<app-admin-header></app-admin-header>
+<app-admin-sidebar></app-admin-sidebar>
+
+<main class="main-wrapper">
+  <div class="container-fluid">
+    <div class="inner-contents">
+      <div class="page-header d-flex align-items-center justify-content-between mr-bottom-30">
+        <div class="left-part">
+          <h2 class="text-dark">Liste des Paiements</h2>
+          <p class="text-gray mb-0">Voici la liste des paiements effectués.</p>
+        </div>
+        <div class="right-part">
+          <form class="search-form w-auto">
+            <input type="text" name="search" class="bg-white form-control" placeholder="Rechercher">
+            <button type="submit" class="btn"><img src="assets/img/svg/search.svg" alt=""></button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card border-0 p-5">
+        <div class="card-header bg-transparent border-0 p-0 d-flex align-items-center justify-content-between gap-3">
+          <h6 class="mb-0">Détails des Paiements</h6>
+        </div>
+
+        <div class="card-body p-0 pt-4">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Employé</th>
+                <th>Montant</th>
+                <th>Date de Paiement</th>
+                <th>Méthode de Paiement</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let payment of payments">
+                <td>{{ getEmployeeName(payment.employeeId) }}</td>
+                <td>{{ payment.amount | currency:'EUR' }}</td>
+                <td>{{ payment.paymentDate | date:'dd/MM/yyyy' }}</td>
+                <td>{{ payment.paymentMethod }}</td>
+                <td>{{ payment.status }}</td>
+                <td>
+                  <button *ngIf="payment.id" (click)="onDelete(payment.id)" class="btn btn-danger">Supprimer</button>
+                  <button *ngIf="payment.id" (click)="onEdit(payment)" class="btn btn-warning">Modifier</button>
+                </td>
+              </tr>
+              <tr *ngIf="payments.length === 0">
+                <td colspan="6" class="text-center text-muted">Aucun paiement trouvé.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<app-admin-footer></app-admin-footer>

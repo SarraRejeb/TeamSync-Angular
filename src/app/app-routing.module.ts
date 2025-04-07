@@ -11,6 +11,9 @@ import { PayrollEditComponent } from './features/payroll/components/payroll-edit
 import { ProjectBudgetsAddComponent } from './features/project-budget/components/project-budget-add/project-budget-add.component';
 import { ProjectBudgetsListComponent } from './features/project-budget/components/project-budget-list/project-budget-list.component';
 import { ProjectBudgetEditComponent } from './features/project-budget/components/project-budget-edit/project-budget-edit.component';
+import { PayrollUserComponent } from './features/payroll/components/payroll-user/payroll-user.component';
+import { PaymentListComponent } from './features/payment/components/payment-list/payment-list.component';
+import { PaymentAddComponent } from './features/payment/components/payment-add/payment-add.component';
 
 
 
@@ -25,8 +28,10 @@ const routes: Routes = [
   { path: 'admin/project-budget/add', component: ProjectBudgetsAddComponent },
   { path: 'admin/project-budget', component: ProjectBudgetsListComponent },
   { path: 'admin/project-budgets/edit/:id', component: ProjectBudgetEditComponent },
-
+  { path: 'admin/payments', component: PaymentListComponent  },
+  { path: 'admin/payment/add', component: PaymentAddComponent  },
   { path: 'user',component: UserLayoutComponent},
+  { path: 'user/payrolls/list', component: PayrollUserComponent },
   { path: '', redirectTo: '/user', pathMatch: 'full' }
 ];
 

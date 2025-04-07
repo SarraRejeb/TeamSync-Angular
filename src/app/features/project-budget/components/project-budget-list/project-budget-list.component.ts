@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-project-budget-list',
   templateUrl: './project-budget-list.component.html',
-  styleUrls: ['./project-budget-list.component.css']
+  styleUrls: ['./project-budget-list.component.css'],
 })
 export class ProjectBudgetsListComponent implements OnInit {
   budgets: ProjectBudget[] = [];

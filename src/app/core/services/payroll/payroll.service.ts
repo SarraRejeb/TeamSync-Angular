@@ -37,4 +37,10 @@ export class PayrollService {
   deletePayroll(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+  // Méthode pour récupérer les paiements depuis l'API cote Front
+  getPaymentDetails(employeeId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/payment/${employeeId}`);
+  }
+  
+  
 }

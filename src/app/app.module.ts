@@ -19,12 +19,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { share } from 'rxjs';
 import { PayrollModule } from './features/payroll/payroll.module';
 import { ProjectBudgetngModule } from './features/project-budget/project-budget.module';
+import { PaymentListComponent } from './features/payment/components/payment-list/payment-list.component';
+import { PaymentAddComponent } from './features/payment/components/payment-add/payment-add.component';
+import { PaymentModule } from './features/payment/payment.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     UserLayoutComponent,
+
 
 
    
@@ -39,7 +43,8 @@ import { ProjectBudgetngModule } from './features/project-budget/project-budget.
     RouterModule,
     JobPostingModule,
     PayrollModule,
-    ProjectBudgetngModule
+    ProjectBudgetngModule,
+    PaymentModule 
    
   ],
  

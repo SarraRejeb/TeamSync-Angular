@@ -36,7 +36,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let projectBudget of budgets">
-                <td>{{ projectBudget.projet?.name }}</td>
+                <td>{{ projectBudget.projet.name}}</td>
                 <td>{{ projectBudget.allocatedFunds | currency:'EUR' }}</td>
                 <td>{{ projectBudget.usedFunds | currency:'EUR' }}</td>
                 <td>
