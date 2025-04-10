@@ -1,4 +1,8 @@
+import { Employee } from "../../employee/models/employee.model";
+import { Payroll } from "../../payroll/models/payroll.model";
+
 export interface Payment {
+items: any;
  id: string;
  employeeId: string;
  payrollId: string;
@@ -10,4 +14,8 @@ export interface Payment {
  status: string;  // Exemple: 'COMPLETED', 'PENDING', etc.
  paymentMethod: string;  // Exemple: 'CREDIT_CARD', 'BANK_TRANSFER', etc.
  referenceNumber: string;
+ 
+ //****
+ employee :Employee
+ payroll : Payroll
 }

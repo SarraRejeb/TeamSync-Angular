@@ -3,6 +3,7 @@ import { Payment } from '../../models/payment.model';
 import { PaymentService } from 'src/app/core/services/payment/payment.service';
 import { Employee } from 'src/app/features/employee/models/employee.model';
 import { EmployeeService } from 'src/app/core/services/employee/employee.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment-list',
@@ -12,10 +13,13 @@ import { EmployeeService } from 'src/app/core/services/employee/employee.service
 export class PaymentListComponent implements OnInit {
   payments: Payment[] = [];
   employees: { [id: string]: Employee } = {};  // Cache for employee names
+  
 
   constructor(
     private paymentService: PaymentService,
-    private employeeService: EmployeeService // Inject EmployeeService
+    private employeeService: EmployeeService, // Inject EmployeeService
+    private router: Router
+
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +63,10 @@ export class PaymentListComponent implements OnInit {
 
   // Method to handle edit
   onEdit(payment: Payment): void {
-    // Logic to edit payment
+    this.router.navigate(['/admin/payments/edit', payment.id]); 
+  }
+  // Méthode pour aller vers les détails d’un paiement
+  onDetails(payment: Payment): void {
+    this.router.navigate(['/admin/payments/details', payment.id]);
   }
 }

@@ -65,7 +65,7 @@ export class PaymentAddComponent implements OnInit {
     this.paymentForm = this.fb.group({
       employeeId: ['', Validators.required],
       paymentMethod: ['', Validators.required],
-      status: ['PENDING', Validators.required],
+      status: ['', Validators.required],
       description: [''],
       isRecurring: [false],
       recurrenceFrequency: ['']
@@ -81,20 +81,41 @@ export class PaymentAddComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-
+  
     if (this.paymentForm.invalid) return;
-
+  
+    const { employeeId } = this.paymentForm.value;
+  
+    // Vérifie si l'employé a déjà un paiement
+    this.paymentService.getPaymentsByEmployee(employeeId).subscribe({
+      next: (payments) => {
+        if (payments && payments.length > 0) {
+          this.errorMessage = 'Cet employé a déjà un paiement enregistré.';
+          this.loading = false;
+        } else {
+          this.ajouterPaiement();
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMessage = "Erreur lors de la vérification de l'existence du paiement.";
+        this.loading = false;
+      }
+    });
+  }
+  
+  ajouterPaiement(): void {
     this.loading = true;
     const paymentData = { ...this.paymentForm.value };
-
+  
     if (!paymentData.isRecurring) {
       paymentData.recurrenceFrequency = null;
     }
-
+  
     this.paymentService.createPayment(paymentData).subscribe({
       next: () => {
         this.successMessage = 'Paiement ajouté avec succès !';
-        this.router.navigate(['/payments']);
+        setTimeout(() => location.reload(), 1000); // recharge la page après 1s
       },
       error: (err) => {
         console.error(err);
@@ -103,4 +124,5 @@ export class PaymentAddComponent implements OnInit {
       complete: () => this.loading = false
     });
   }
+  
 }

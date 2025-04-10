@@ -29,11 +29,6 @@
           <div *ngIf="payroll">
             <form (ngSubmit)="onSubmit()" #payrollForm="ngForm">
               <div class="form-group">
-                <label class="form-label" for="employeeId">Employé</label>
-                <input type="text" class="form-control" id="employeeId" [(ngModel)]="payroll.employeeId" name="employeeId" placeholder="ID de l'employé" required [readonly]="true" />
-              </div>
-
-              <div class="form-group">
                 <label class="form-label" for="salary">Salaire</label>
                 <input type="number" class="form-control" id="salary" [(ngModel)]="payroll.salary" name="salary" placeholder="Salaire" required />
               </div>

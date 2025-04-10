@@ -12,45 +12,93 @@
         <div class="right-part">
           <form class="search-form w-auto">
             <input type="text" name="search" class="bg-white form-control" placeholder="Rechercher">
-            <button type="submit" class="btn"><img src="assets/img/svg/search.svg" alt=""></button>
+            <button type="submit" class="btn">
+              
+            </button>
           </form>
         </div>
       </div>
 
       <div class="card border-0 p-5">
-        <div class="card-header bg-transparent border-0 p-0 d-flex align-items-center justify-content-between gap-3">
-          <h6 class="mb-0">Détails des Paiements</h6>
-        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table id="table-2" class="display text-center table table-striped">
+              <thead>
+                <tr>
+                  
+                  <th>Nom de l'employé</th>
+                  <th>Référence Paiement</th> 
+                  <th>Montant</th>
+                  <th>Date de Paiement</th>
+                  <th>Méthode de Paiement</th>
+                  <th>Statut</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let payment of payments">
 
-        <div class="card-body p-0 pt-4">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Employé</th>
-                <th>Montant</th>
-                <th>Date de Paiement</th>
-                <th>Méthode de Paiement</th>
-                <th>Statut</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let payment of payments">
-                <td>{{ getEmployeeName(payment.employeeId) }}</td>
-                <td>{{ payment.amount | currency:'EUR' }}</td>
-                <td>{{ payment.paymentDate | date:'dd/MM/yyyy' }}</td>
-                <td>{{ payment.paymentMethod }}</td>
-                <td>{{ payment.status }}</td>
+
+                  <td>{{ getEmployeeName(payment.employeeId) }}</td>
+                <!-- Référence Paiement -->
                 <td>
-                  <button *ngIf="payment.id" (click)="onDelete(payment.id)" class="btn btn-danger">Supprimer</button>
-                  <button *ngIf="payment.id" (click)="onEdit(payment)" class="btn btn-warning">Modifier</button>
+                  <span class="text-dark fw-bold">
+                    {{ payment.referenceNumber || 'Non disponible' }}
+                  </span>
                 </td>
-              </tr>
-              <tr *ngIf="payments.length === 0">
-                <td colspan="6" class="text-center text-muted">Aucun paiement trouvé.</td>
-              </tr>
-            </tbody>
-          </table>
+                
+
+                  <td>
+                    <span class="text-purple fw-bold">
+                      {{ payment.amount | currency:'EUR' }}
+                    </span>
+                  </td>
+
+                  <td>{{ payment.paymentDate | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ payment.paymentMethod }}</td>
+
+                  <!-- Statut avec badge -->
+                  <td>
+                    <span class="status-badge" [ngClass]="{
+                      'status-completed': payment.status === 'COMPLETED',
+                      'status-failed': payment.status === 'FAILED',
+                      'status-pending': payment.status === 'PENDING'
+                    }">
+                      <i class="bi me-1" [ngClass]="{
+                        'bi-check-circle': payment.status === 'COMPLETED',
+                        'bi-x-circle': payment.status === 'FAILED',
+                        'bi-clock': payment.status === 'PENDING'
+                      }"></i>
+                      {{ payment.status }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <div class="dropdown">
+                      <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </a>
+                      <div class="dropdown-menu p-0">
+                        <button class="dropdown-item" (click)="onDetails(payment)">
+                          Détails
+                        </button>                        
+                        <button class="dropdown-item" (click)="onEdit(payment)">
+                          Modifier
+                        </button>
+                        <button class="dropdown-item text-danger" (click)="onDelete(payment.id)">
+                          Supprimer
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr *ngIf="payments.length === 0">
+                  <td colspan="7" class="text-center text-muted">Aucun paiement trouvé.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

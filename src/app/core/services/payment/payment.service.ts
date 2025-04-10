@@ -10,7 +10,6 @@ import { Payment } from 'src/app/features/payment/models/payment.model';
 export class PaymentService {
 
   private apiUrl = 'http://localhost:8082/api/payments'; // URL Backend Spring Boot
-
   constructor(private http: HttpClient) { }
 
   // Get all payments
@@ -37,9 +36,14 @@ export class PaymentService {
   updatePayment(id: string, payment: Payment): Observable<Payment> {
     return this.http.put<Payment>(`${this.apiUrl}/${id}`, payment);
   }
-
+  
   // Delete a payment
   deletePayment(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+  getPaymentsByEmployee(employeeId: string) {
+    return this.http.get<any[]>(`${this.apiUrl}/employee/${employeeId}`);
+  }
+  
+
 }

@@ -37,16 +37,30 @@
             <tbody>
               <tr *ngFor="let projectBudget of budgets">
                 <td>{{ projectBudget.projet.name}}</td>
-                <td>{{ projectBudget.allocatedFunds | currency:'EUR' }}</td>
-                <td>{{ projectBudget.usedFunds | currency:'EUR' }}</td>
                 <td>
+                  <span class="text-purple fw-bold">
+                    {{ projectBudget.allocatedFunds | currency:'EUR' }}
+                  </span>
+                </td>
+                <td>
+                  <span class="text-purple fw-bold">
+                    {{ projectBudget.usedFunds  | currency:'EUR' }}
+                  </span>
+                </td>
+                <td>
+                  <div class="dropdown">
+                    <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                      <i class="bi bi-three-dots-vertical"></i>
+                    </a>
+                    <div class="dropdown-menu p-0">
                 <!-- Bouton de suppression -->
-                <button class="btn btn-danger" 
+                <button class="dropdown-item" 
                 (click)="onDelete(projectBudget.id ? projectBudget.id : '')" *ngIf="projectBudget.id">Supprimer</button>
                 <!-- Bouton de Edit -->
-                <button class="btn btn-warning" 
+                <button class="dropdown-item" 
                 (click)="onEdit(projectBudget)" *ngIf="projectBudget.id">Modifier</button>
-        
+                    </div>
+                  </div>
 
                 </td>
               </tr>

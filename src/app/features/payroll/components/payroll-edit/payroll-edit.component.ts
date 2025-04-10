@@ -18,12 +18,17 @@ export class PayrollEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const payrollId = this.route.snapshot.paramMap.get('id'); // Récupérer l'ID de l'URL
+    const payrollId = this.route.snapshot.paramMap.get('id');
   
     if (payrollId) {
-      this.payrollService.getPayrollById(payrollId).subscribe( // Passer l'ID comme chaîne
+      this.payrollService.getPayrollById(payrollId).subscribe(
         (data) => {
-          this.payroll = data; // Charger les informations de la fiche de paie
+          //Formatage de la date pour compatibilité avec <input type="date">
+          if (data.payDate) {
+            data.payDate = new Date(data.payDate).toISOString().split('T')[0];
+          }
+  
+          this.payroll = data; // Assigner les données formatées à l'objet payroll
         },
         (error) => {
           console.error('Erreur lors de la récupération de la fiche de paie', error);
@@ -35,6 +40,7 @@ export class PayrollEditComponent implements OnInit {
       this.router.navigate(['/admin/payrolls']);
     }
   }
+  
   
   
 

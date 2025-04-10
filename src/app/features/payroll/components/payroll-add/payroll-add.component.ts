@@ -86,7 +86,7 @@ export class PayrollsAddComponent implements OnInit {
     this.payrollService.addPayroll(payrollData).subscribe(
       response => {
         alert('Fiche de paie ajoutée avec succès !');
-        this.loadPayrolls(); // ✅ Actualiser la liste pour détecter un double ajout
+        this.loadPayrolls(); //  Actualiser la liste pour détecter un double ajout
         setTimeout(() => {
           this.router.navigate(['/payrolls']);
         }, 1500);

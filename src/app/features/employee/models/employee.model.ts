@@ -1,5 +1,3 @@
-import { Payroll } from "../../payroll/models/payroll.model";
-
 export interface Employee {
  id: string; // L'ID MongoDB de l'employé
  name: string; // Le nom de l'employé

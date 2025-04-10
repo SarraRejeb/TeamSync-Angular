@@ -14,6 +14,8 @@ import { ProjectBudgetEditComponent } from './features/project-budget/components
 import { PayrollUserComponent } from './features/payroll/components/payroll-user/payroll-user.component';
 import { PaymentListComponent } from './features/payment/components/payment-list/payment-list.component';
 import { PaymentAddComponent } from './features/payment/components/payment-add/payment-add.component';
+import { PaymentEditComponent } from './features/payment/components/payment-edit/payment-edit.component';
+import { PaymentDetailComponent } from './features/payment/components/payment-detail/payment-detail.component';
 
 
 
@@ -21,7 +23,7 @@ const routes: Routes = [
   { path: 'admin',  component: AdminLayoutComponent },
   { path: 'admin/job-postings/add', component: JobPostingsAddComponent },
   { path: 'admin/job-postings/edit/:id', component: JobPostingsEditComponent },
-  {path : 'admin/job-postings', component: JobPostingsListComponent},
+  { path : 'admin/job-postings', component: JobPostingsListComponent},
   { path: 'admin/payrolls/add', component: PayrollsAddComponent },
   { path: 'admin/payrolls', component: PayrollListComponent },
   { path: 'admin/payrolls/edit/:id', component: PayrollEditComponent },
@@ -29,7 +31,9 @@ const routes: Routes = [
   { path: 'admin/project-budget', component: ProjectBudgetsListComponent },
   { path: 'admin/project-budgets/edit/:id', component: ProjectBudgetEditComponent },
   { path: 'admin/payments', component: PaymentListComponent  },
+  { path: 'admin/payments/edit/:id', component: PaymentEditComponent },
   { path: 'admin/payment/add', component: PaymentAddComponent  },
+  { path: 'admin/payments/details/:id', component: PaymentDetailComponent },
   { path: 'user',component: UserLayoutComponent},
   { path: 'user/payrolls/list', component: PayrollUserComponent },
   { path: '', redirectTo: '/user', pathMatch: 'full' }
